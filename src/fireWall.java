@@ -5,6 +5,7 @@
 // This code is available under the "MIT License". Please
 // see the file COPYING in this distribution for license
 // details.
+// Referred java tutorials from oracle.com
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -28,13 +29,13 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
         Button blockAll;
         Button unblockAll;
         private JList list;
-        private Button fireButton;
+     
         private Button removeIP;
-        TextField employeeName = new TextField(20) ;
-       //String[] data = {"one", "two", "three", "four"};
+        TextField ipAdressText = new TextField(20) ;
+       
         private DefaultListModel listModel;
-        //JList dataList = new JList(data);
-        private int numClicks = 0;
+        
+       
 
         public static void main(String[] args) {
                 fireWall myWindow = new fireWall("Firewall");
@@ -55,16 +56,15 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
                 unblockAll =  new Button("Unblock All");
                 removeIP = new Button("Remove IP");
                 listModel = new DefaultListModel();
-                listModel.addElement("98.139.180.149");
-                //listModel.addElement("John Smith");
-                //listModel.addElement("Kathy Green");
+                //listModel.addElement("98.139.180.149");
+               
                 list = new JList(listModel);
                 list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 list.setSelectedIndex(0);
-                //list.addListSelectionListener(this);
+               
                 list.setVisibleRowCount(5);
                 JScrollPane listScrollPane = new JScrollPane(list);
-                //employeeName = new JTextField(10);
+                
                 add(singleIP);
                 add(blank);
                 add(b);
@@ -74,11 +74,11 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
                 add(blank2);
                 add(b3);
                 add(removeIP);
-                add(employeeName);
+                add(ipAdressText);
                 add(blockAll);
                 add(unblockAll);
                 add(listScrollPane);
-                //add(dataList);
+               
                 b.addActionListener(this);
                 b2.addActionListener(this);
                 b3.addActionListener(this);
@@ -88,17 +88,16 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-                numClicks++;
+               
                 String s = e.getActionCommand(); 
                 String ipAddress;
                 if (s.equals("Block IP")) 
         		{ System.out.println("Block");
         			try
         			{
-        				// Process process = Runtime.getRuntime().exec("notepad.exe");
-        				// Process process = Runtime.getRuntime().exec("sudo iptables -A INPUT -s 98.139.180.149 -j DROP"); 
         				Process process = Runtime.getRuntime().exec("sudo iptables -A INPUT -s "+text.getText()+" -j DROP");
-        				//System.out.println("Block");
+        				
+        				
         			}
         			catch (IOException exc)
         			{
@@ -109,9 +108,6 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
         		{ 
         			try
         			{
-        				// Process process = Runtime.getRuntime().exec("notepad.exe");
-        				// Process process = Runtime.getRuntime().exec("sudo iptables -A INPUT -s 98.139.180.149 -j DROP"); 
-        				//Process process = Runtime.getRuntime().exec("sudo iptables -D INPUT -s 98.139.180.149 -j DROP");
         				Process process = Runtime.getRuntime().exec("sudo iptables -D INPUT -s "+text.getText()+" -j DROP");
         			}
         			catch (IOException exc)
@@ -122,14 +118,10 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
         		else if(s.equals("Add IP")) 
         		{ 
         			
-        				String str1 = employeeName.getText();
-        				System.out.println("add");
+        				String str1 = ipAdressText.getText();
+        				//System.out.println("add");
         				listModel.addElement(str1);
-        				//dataList.
-        				// Process process = Runtime.getRuntime().exec("notepad.exe");
-        				// Process process = Runtime.getRuntime().exec("sudo iptables -A INPUT -s 98.139.180.149 -j DROP"); 
-        				//Process process = Runtime.getRuntime().exec("sudo iptables -D INPUT -s 98.139.180.149 -j DROP");
-        				//Process process = Runtime.getRuntime().exec("sudo iptables -D INPUT -s "+text.getText()+" -j DROP");
+        				
         			
         		} 	
         		else if(s.equals("Remove IP")) 
@@ -146,6 +138,7 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
         			     try
         			     {
         			    	 Process process = Runtime.getRuntime().exec("sudo iptables -A INPUT -s "+ipAddress+" -j DROP");
+        			    	
         			     }
         			     catch (IOException exc)
              			{
@@ -162,6 +155,8 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
             		     try
             		     {
             		    	 Process process = Runtime.getRuntime().exec("sudo iptables -D INPUT -s "+ipAddress+" -j DROP");
+            		    	
+            		    	 
             		     }
             		     catch (IOException exc)
                 		{
@@ -170,7 +165,7 @@ public class fireWall extends Frame implements WindowListener,ActionListener {
             		}
         			
         		}
-                //text.setText("Button Clicked " + numClicks + " times");
+           
                 System.out.println(text.getText());
         }
 
